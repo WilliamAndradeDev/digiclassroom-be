@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace DigiClassroom.Infrastructure
+namespace DigiClassroom.Infrastructure.InfrastructureDependencyInjection
 {
     public static class InfrastructureServiceCollectionExtension
     {
