@@ -6,5 +6,14 @@
     },
     "applicationUrl": "http://localhost:5000",
     "dotnetRunMessages": "true"
+  },
+  "profiles": {
+    "DigiClassroom.Web": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "http://localhost:5000"
+    }
   }
 }
