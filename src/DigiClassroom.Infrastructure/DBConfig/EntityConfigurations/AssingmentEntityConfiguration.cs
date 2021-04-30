@@ -14,6 +14,7 @@ namespace DigiClassroom.Infrastructure.DBConfig.EntityConfigurations
             builder.Property(a => a.Creation).HasColumnType("date");
             builder.Property(a => a.Creation).ValueGeneratedOnAdd();
 
+            builder.Property(a => a.Deadline).HasColumnType("date");
             builder.Property(a => a.Deadline).IsRequired();
 
             builder.Property(a => a.Updated).HasColumnType("date");
@@ -23,8 +24,9 @@ namespace DigiClassroom.Infrastructure.DBConfig.EntityConfigurations
 
             builder.Property(a => a.Pontuation).HasPrecision(4, 2);
 
-            builder.HasMany(a => a.Comments).WithOne();
+            builder.HasMany(a => a.Comments).WithOne().IsRequired();
 
+            builder.HasMany(a => a.Answers).WithOne().IsRequired();
         }
     }
 }

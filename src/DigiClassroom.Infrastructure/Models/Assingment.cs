@@ -11,6 +11,7 @@ namespace DigiClassroom.Infrastructure.Models
         public DateTime Updated { get; set; }
         public string Description { get; set; }
         public double Pontuation { get; set; }
+        public List<Answer> Answers { get; set; }
         public List<Comment> Comments { get; set; }
     }
 }

@@ -15,6 +15,7 @@ namespace DigiClassroom.Infrastructure.DBConfig
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.ApplyConfiguration(new AnswerEntityConfiguration());
             builder.ApplyConfiguration(new AssingmentEntityConfiguration());
             builder.ApplyConfiguration(new AnnouncementEntityConfiguration());
             builder.ApplyConfiguration(new LibraryFileEntityConfiguration());

@@ -11,7 +11,8 @@ namespace DigiClassroom.Infrastructure.DBConfig.EntityConfigurations
             builder.HasKey(l => l.Id);
             builder.Property(l => l.Id).ValueGeneratedOnAdd();
 
-            builder.HasMany(l => l.Files).WithOne();
+            builder.HasMany(l => l.Files).WithMany(lf=>lf.Libraries).UsingEntity(lbf=>lbf.ToTable("LibraryLibraryFiles"));
+
         }
     }
 }

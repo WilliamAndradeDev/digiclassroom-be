@@ -2,9 +2,9 @@
 
 namespace DigiClassroom.Infrastructure.Models
 {
-    public class Comment
+    public class Answer
     {
         public Guid Id { get; set; }
-        public string Content { get; set; }
+        public string ContentAnswer { get; set; }
     }
 }

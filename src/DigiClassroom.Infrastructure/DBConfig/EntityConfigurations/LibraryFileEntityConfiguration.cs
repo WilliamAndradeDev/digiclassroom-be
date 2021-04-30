@@ -12,7 +12,6 @@ namespace DigiClassroom.Infrastructure.DBConfig.EntityConfigurations
             builder.Property(lf => lf.Id).ValueGeneratedOnAdd();
 
             builder.Property(lf => lf.LocatedAt).IsRequired();
-            builder.Property(lf => lf.LocatedAt).HasColumnType("TEXT");
         }
     }
 }

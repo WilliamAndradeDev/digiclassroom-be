@@ -4,14 +4,14 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace DigiClassroom.Infrastructure.DBConfig.EntityConfigurations
 {
-    public class AnnouncementEntityConfiguration : IEntityTypeConfiguration<Announcement>
+    public class AnswerEntityConfiguration : IEntityTypeConfiguration<Answer>
     {
-        public void Configure(EntityTypeBuilder<Announcement> builder)
+        public void Configure(EntityTypeBuilder<Answer> builder)
         {
             builder.HasKey(a => a.Id);
             builder.Property(a => a.Id).ValueGeneratedOnAdd();
 
-            builder.Property(a => a.Content).HasMaxLength(250).IsRequired();
+            builder.Property(a => a.ContentAnswer).IsRequired();
         }
     }
 }

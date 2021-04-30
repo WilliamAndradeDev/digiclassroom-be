@@ -11,7 +11,7 @@ namespace DigiClassroom.Infrastructure.DBConfig.EntityConfigurations
             builder.HasKey(c => c.Id);
             builder.Property(c => c.Id).ValueGeneratedOnAdd();
 
-            builder.Property(c => c.Content).IsRequired();
+            builder.Property(c => c.Content).HasMaxLength(250).IsRequired();
         }
     }
 }
