@@ -34,6 +34,20 @@ namespace DigiClassroom.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Users",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Username = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: false),
+                    Password = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: false),
+                    Role = table.Column<string>(type: "character varying(120)", maxLength: 120, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Announcements",
                 columns: table => new
                 {
@@ -94,19 +108,43 @@ namespace DigiClassroom.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "UserClassrooms",
+                columns: table => new
+                {
+                    ClassroomsId = table.Column<Guid>(type: "uuid", nullable: false),
+                    UsersId = table.Column<Guid>(type: "uuid", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserClassrooms", x => new { x.ClassroomsId, x.UsersId });
+                    table.ForeignKey(
+                        name: "FK_UserClassrooms_Classrooms_ClassroomsId",
+                        column: x => x.ClassroomsId,
+                        principalTable: "Classrooms",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_UserClassrooms_Users_UsersId",
+                        column: x => x.UsersId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Answer",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     ContentAnswer = table.Column<string>(type: "text", nullable: false),
-                    AssingmentId = table.Column<Guid>(type: "uuid", nullable: false)
+                    AssingnmentId = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Answer", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Answer_Assingments_AssingmentId",
-                        column: x => x.AssingmentId,
+                        name: "FK_Answer_Assingments_AssingnmentId",
+                        column: x => x.AssingnmentId,
                         principalTable: "Assingments",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -118,14 +156,14 @@ namespace DigiClassroom.Infrastructure.Migrations
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Content = table.Column<string>(type: "character varying(250)", maxLength: 250, nullable: false),
-                    AssingmentId = table.Column<Guid>(type: "uuid", nullable: false)
+                    AssingnmentId = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Comment", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Comment_Assingments_AssingmentId",
-                        column: x => x.AssingmentId,
+                        name: "FK_Comment_Assingments_AssingnmentId",
+                        column: x => x.AssingnmentId,
                         principalTable: "Assingments",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -161,9 +199,9 @@ namespace DigiClassroom.Infrastructure.Migrations
                 column: "ClassroomId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Answer_AssingmentId",
+                name: "IX_Answer_AssingnmentId",
                 table: "Answer",
-                column: "AssingmentId");
+                column: "AssingnmentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Assingments_ClassroomId",
@@ -171,14 +209,25 @@ namespace DigiClassroom.Infrastructure.Migrations
                 column: "ClassroomId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Comment_AssingmentId",
+                name: "IX_Comment_AssingnmentId",
                 table: "Comment",
-                column: "AssingmentId");
+                column: "AssingnmentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_LibraryLibraryFiles_LibrariesId",
                 table: "LibraryLibraryFiles",
                 column: "LibrariesId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserClassrooms_UsersId",
+                table: "UserClassrooms",
+                column: "UsersId");
+
+            migrationBuilder.CreateIndex(
+                name: "UserNameIndex",
+                table: "Users",
+                column: "Username",
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -196,6 +245,9 @@ namespace DigiClassroom.Infrastructure.Migrations
                 name: "LibraryLibraryFiles");
 
             migrationBuilder.DropTable(
+                name: "UserClassrooms");
+
+            migrationBuilder.DropTable(
                 name: "Assingments");
 
             migrationBuilder.DropTable(
@@ -203,6 +255,9 @@ namespace DigiClassroom.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "LibraryFile");
+
+            migrationBuilder.DropTable(
+                name: "Users");
 
             migrationBuilder.DropTable(
                 name: "Classrooms");

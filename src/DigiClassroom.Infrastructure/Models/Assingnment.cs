@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace DigiClassroom.Infrastructure.Models
 {
-    public class Assingment
+    public class Assingnment
     {
         public Guid Id { get; set; }
         public DateTime Creation { get; set; }

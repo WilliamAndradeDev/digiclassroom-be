@@ -1,9 +1,9 @@
 ﻿namespace DigiClassroom.Web.SecurityConfig
 {
-    public class JwtConfig
+    public static class JwtConfig
     {
 
-        public string Secret { get; set; }
+        public static byte[] Secret { get; set; }
 
     }
 }

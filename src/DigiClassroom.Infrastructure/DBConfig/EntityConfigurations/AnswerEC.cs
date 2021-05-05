@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace DigiClassroom.Infrastructure.DBConfig.EntityConfigurations
 {
-    public class AnswerEntityConfiguration : IEntityTypeConfiguration<Answer>
+    public class AnswerEC : IEntityTypeConfiguration<Answer>
     {
         public void Configure(EntityTypeBuilder<Answer> builder)
         {

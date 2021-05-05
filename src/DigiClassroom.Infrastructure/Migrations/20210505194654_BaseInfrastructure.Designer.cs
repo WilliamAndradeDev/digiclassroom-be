@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DigiClassroom.Infrastructure.Migrations
 {
     [DbContext(typeof(DigiClassroomContext))]
-    [Migration("20210430001449_BaseInfrastructure")]
+    [Migration("20210505194654_BaseInfrastructure")]
     partial class BaseInfrastructure
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -20,6 +20,21 @@ namespace DigiClassroom.Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63)
                 .HasAnnotation("ProductVersion", "5.0.5")
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+            modelBuilder.Entity("ClassroomUser", b =>
+                {
+                    b.Property<Guid>("ClassroomsId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("UsersId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("ClassroomsId", "UsersId");
+
+                    b.HasIndex("UsersId");
+
+                    b.ToTable("UserClassrooms");
+                });
 
             modelBuilder.Entity("DigiClassroom.Infrastructure.Models.Announcement", b =>
                 {
@@ -48,7 +63,7 @@ namespace DigiClassroom.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("AssingmentId")
+                    b.Property<Guid>("AssingnmentId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("ContentAnswer")
@@ -57,12 +72,12 @@ namespace DigiClassroom.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AssingmentId");
+                    b.HasIndex("AssingnmentId");
 
                     b.ToTable("Answer");
                 });
 
-            modelBuilder.Entity("DigiClassroom.Infrastructure.Models.Assingment", b =>
+            modelBuilder.Entity("DigiClassroom.Infrastructure.Models.Assingnment", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -129,7 +144,7 @@ namespace DigiClassroom.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("AssingmentId")
+                    b.Property<Guid>("AssingnmentId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("Content")
@@ -139,7 +154,7 @@ namespace DigiClassroom.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AssingmentId");
+                    b.HasIndex("AssingnmentId");
 
                     b.ToTable("Comment");
                 });
@@ -173,6 +188,36 @@ namespace DigiClassroom.Infrastructure.Migrations
                     b.ToTable("LibraryFile");
                 });
 
+            modelBuilder.Entity("DigiClassroom.Infrastructure.Models.User", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasMaxLength(120)
+                        .HasColumnType("character varying(120)");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Username")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex");
+
+                    b.ToTable("Users");
+                });
+
             modelBuilder.Entity("LibraryLibraryFile", b =>
                 {
                     b.Property<Guid>("FilesId")
@@ -188,6 +233,21 @@ namespace DigiClassroom.Infrastructure.Migrations
                     b.ToTable("LibraryLibraryFiles");
                 });
 
+            modelBuilder.Entity("ClassroomUser", b =>
+                {
+                    b.HasOne("DigiClassroom.Infrastructure.Models.Classroom", null)
+                        .WithMany()
+                        .HasForeignKey("ClassroomsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DigiClassroom.Infrastructure.Models.User", null)
+                        .WithMany()
+                        .HasForeignKey("UsersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("DigiClassroom.Infrastructure.Models.Announcement", b =>
                 {
                     b.HasOne("DigiClassroom.Infrastructure.Models.Classroom", null)
@@ -199,14 +259,14 @@ namespace DigiClassroom.Infrastructure.Migrations
 
             modelBuilder.Entity("DigiClassroom.Infrastructure.Models.Answer", b =>
                 {
-                    b.HasOne("DigiClassroom.Infrastructure.Models.Assingment", null)
+                    b.HasOne("DigiClassroom.Infrastructure.Models.Assingnment", null)
                         .WithMany("Answers")
-                        .HasForeignKey("AssingmentId")
+                        .HasForeignKey("AssingnmentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("DigiClassroom.Infrastructure.Models.Assingment", b =>
+            modelBuilder.Entity("DigiClassroom.Infrastructure.Models.Assingnment", b =>
                 {
                     b.HasOne("DigiClassroom.Infrastructure.Models.Classroom", null)
                         .WithMany("Assingments")
@@ -217,9 +277,9 @@ namespace DigiClassroom.Infrastructure.Migrations
 
             modelBuilder.Entity("DigiClassroom.Infrastructure.Models.Comment", b =>
                 {
-                    b.HasOne("DigiClassroom.Infrastructure.Models.Assingment", null)
+                    b.HasOne("DigiClassroom.Infrastructure.Models.Assingnment", null)
                         .WithMany("Comments")
-                        .HasForeignKey("AssingmentId")
+                        .HasForeignKey("AssingnmentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -250,7 +310,7 @@ namespace DigiClassroom.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("DigiClassroom.Infrastructure.Models.Assingment", b =>
+            modelBuilder.Entity("DigiClassroom.Infrastructure.Models.Assingnment", b =>
                 {
                     b.Navigation("Answers");
 

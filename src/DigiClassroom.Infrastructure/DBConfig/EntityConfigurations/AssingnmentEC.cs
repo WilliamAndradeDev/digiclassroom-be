@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace DigiClassroom.Infrastructure.DBConfig.EntityConfigurations
 {
-    public class AssingmentEntityConfiguration : IEntityTypeConfiguration<Assingment>
+    public class AssingnmentEC : IEntityTypeConfiguration<Assingnment>
     {
-        public void Configure(EntityTypeBuilder<Assingment> builder)
+        public void Configure(EntityTypeBuilder<Assingnment> builder)
         {
             builder.HasKey(a => a.Id);
             builder.Property(a => a.Id).ValueGeneratedOnAdd();

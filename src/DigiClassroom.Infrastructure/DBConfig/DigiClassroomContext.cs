@@ -6,22 +6,24 @@ namespace DigiClassroom.Infrastructure.DBConfig
 {
     public class DigiClassroomContext : DbContext
     {
-        public DbSet<Assingment> Assingments { get; set; }
+        public DbSet<Assingnment> Assingments { get; set; }
         public DbSet<Classroom> Classrooms { get; set; }
         public DbSet<Announcement> Announcements { get; set; }
         public DbSet<Library> Libraries { get; set; }
+        public DbSet<User> Users { get; set; }
 
         public DigiClassroomContext(DbContextOptions<DigiClassroomContext> options) : base(options) {}
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.ApplyConfiguration(new AnswerEntityConfiguration());
-            builder.ApplyConfiguration(new AssingmentEntityConfiguration());
-            builder.ApplyConfiguration(new AnnouncementEntityConfiguration());
-            builder.ApplyConfiguration(new LibraryFileEntityConfiguration());
-            builder.ApplyConfiguration(new LibraryEntityConfiguration());
-            builder.ApplyConfiguration(new CommentEntityConfiguration());
-            builder.ApplyConfiguration(new ClassroomEntityConfiguration());
+            builder.ApplyConfiguration(new AnswerEC());
+            builder.ApplyConfiguration(new AssingnmentEC());
+            builder.ApplyConfiguration(new AnnouncementEC());
+            builder.ApplyConfiguration(new LibraryFileEC());
+            builder.ApplyConfiguration(new LibraryEC());
+            builder.ApplyConfiguration(new CommentEC());
+            builder.ApplyConfiguration(new ClassroomEC());
+            builder.ApplyConfiguration(new UserEC());
         }
     }
 }

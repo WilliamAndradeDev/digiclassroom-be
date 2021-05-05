@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace DigiClassroom.Infrastructure.DBConfig.EntityConfigurations
 {
-    public class AnnouncementEntityConfiguration : IEntityTypeConfiguration<Announcement>
+    public class AnnouncementEC : IEntityTypeConfiguration<Announcement>
     {
         public void Configure(EntityTypeBuilder<Announcement> builder)
         {

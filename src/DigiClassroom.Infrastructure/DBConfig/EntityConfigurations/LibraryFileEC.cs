@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace DigiClassroom.Infrastructure.DBConfig.EntityConfigurations
 {
-    public class LibraryFileEntityConfiguration : IEntityTypeConfiguration<LibraryFile>
+    public class LibraryFileEC : IEntityTypeConfiguration<LibraryFile>
     {
         public void Configure(EntityTypeBuilder<LibraryFile> builder)
         {
