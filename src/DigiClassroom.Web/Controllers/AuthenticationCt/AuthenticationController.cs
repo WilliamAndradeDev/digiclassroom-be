@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using DigiClassroom.ApplicationCore.Services.AutheticationSv;
 using DigiClassroom.Infrastructure.Repositories.UserRp;
 using DigiClassroom.Web.Controllers.AuthenticationCt.Dtos;
 using DigiClassroom.Web.SecurityConfig.Services;
@@ -13,26 +14,26 @@ namespace DigiClassroom.Web.Controllers.AuthenticationCt
     {
 
         private ITokenService _tokenService;
-        private IUserRepository _userRepository;
+        private IAuthenticationService _authenticationService;
 
-        public AuthenticationController(ITokenService tokenService,IUserRepository userRepository)
+        public AuthenticationController(ITokenService tokenService, IAuthenticationService authenticationService)
         {
-            _tokenService=tokenService;
-            _userRepository=userRepository;
+            _tokenService = tokenService;
+            _authenticationService = authenticationService;
         }
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<ActionResult<TokenDto>> CreateToken(AutheticationForm form)
+        public async Task<ActionResult<TokenDto>> AuthenticateUser(AutheticationForm form)
         {
-            var user= await _userRepository.
-                                FindUserByUsernameAndPasswordAsync(form.Username,
-                                                                    form.Password);
-            if(user==null)
-                return NotFound(new { message = "Usuário ou Senha inválidos. Tente novamente."});
+            var user = await _authenticationService
+                                        .AuthenticateUser(form.Username,form.Password);
+            if (user == null)
+                return Unauthorized(new { message = "Usuário ou Senha inválidos. Tente novamente." });
 
-            string token= _tokenService.GenerateToken(user);
-            return new TokenDto(token:token);
+            string token = _tokenService.GenerateToken(user);
+            return new TokenDto(token: token);
         }
+
     }
 }

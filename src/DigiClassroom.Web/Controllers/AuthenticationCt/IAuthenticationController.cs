@@ -6,6 +6,6 @@ namespace DigiClassroom.Web.Controllers.AuthenticationCt
 {
     public interface IAuthenticationController
     {
-         Task<ActionResult<TokenDto>> CreateToken(AutheticationForm form);
+         Task<ActionResult<TokenDto>> AuthenticateUser(AutheticationForm form);
     }
 }

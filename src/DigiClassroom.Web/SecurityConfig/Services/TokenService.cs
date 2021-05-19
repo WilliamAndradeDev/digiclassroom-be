@@ -1,5 +1,6 @@
 using System;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using DigiClassroom.Infrastructure.Models;
@@ -36,5 +37,10 @@ namespace DigiClassroom.Web.SecurityConfig.Services
             return _jwtSecurityTokenHandler.WriteToken(token);
         }
 
+        public string GetUserName(string token)
+        {
+            var jsonToken = _jwtSecurityTokenHandler.ReadJwtToken(token);
+            return jsonToken.Claims.First(claim => claim.Type == ClaimTypes.Name).Value;
+        }
     }
 }

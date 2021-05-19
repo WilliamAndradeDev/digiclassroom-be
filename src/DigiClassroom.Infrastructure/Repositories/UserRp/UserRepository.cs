@@ -22,6 +22,9 @@ namespace DigiClassroom.Infrastructure.Repositories.UserRp
                             .Where(u=>u.Id.Equals(id))
                                     .FirstOrDefaultAsync();
 
+        public async Task<User> FindUserByUserNameAsync(string name)
+        => await _digiClassroomContext.Users.Where(u=>u.Username.Equals(name)).FirstOrDefaultAsync();
+
         public async Task<User> FindUserByUsernameAndPasswordAsync(string username, string password)
         => await _digiClassroomContext.Users
                            .Where(u => u.Username.Equals(username) &&

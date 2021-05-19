@@ -9,5 +9,6 @@ namespace DigiClassroom.Infrastructure.Repositories.UserRp
         Task<User> Save(User user);
         Task<User> FindUserByUsernameAndPasswordAsync(string username,string password);
         Task<User> FindUserById(Guid id);
+        Task<User> FindUserByUserNameAsync(string name);
     }
 }

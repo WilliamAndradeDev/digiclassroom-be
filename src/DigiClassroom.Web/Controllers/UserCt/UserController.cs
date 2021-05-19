@@ -1,7 +1,9 @@
 using System;
 using System.Threading.Tasks;
-using DigiClassroom.ApplicationCore.Services.UserSV;
+using DigiClassroom.ApplicationCore.Services.UserSv;
 using DigiClassroom.Web.Controllers.UserCt.Dtos;
+using DigiClassroom.Web.ExceptionHdl.ErrorModels;
+using DigiClassroom.Web.ExceptionHdl.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -28,7 +30,7 @@ namespace DigiClassroom.Web.Controllers.UserCt
                 var result = await _userService.Create(form.toUser());
                 return CreatedAtAction("FindUser", new { id = result.Id }, new UserDto(result));
             }
-            return BadRequest();
+            return BadRequest(new ErrorResponse(ModelState.GetErrorsEnumerated()));
         }
 
         [HttpGet("{id}")]
@@ -39,7 +41,7 @@ namespace DigiClassroom.Web.Controllers.UserCt
             if(result!=null)
                 return new UserDto(result);
             else
-                return NotFound();
+                return NotFound("Nenhum usuário foi encontrado com esse ID.");
         }
     }
 }
