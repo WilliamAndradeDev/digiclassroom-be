@@ -1,5 +1,5 @@
 # DigiClassroom - Back End
-Projeto criado com o objetivo de facilitar o gerenciamento do conteúdo dado em sala, sendo projetado para ser uma versão mais simples e Open Source do GoogleClassroom(Os cabeçalhos com a licença ainda serão adicionados). Este repositório contém o Back-End do projeto.
+Projeto criado com o objetivo de facilitar o gerenciamento do conteúdo dado em sala, sendo projetado para ser uma versão mais simples e Open Source do GoogleClassroom. Este repositório contém o Back-End do projeto.
 
 ### Tecnologias Utilizadas:
 - .NET 5(C#)
@@ -7,3 +7,6 @@ Projeto criado com o objetivo de facilitar o gerenciamento do conteúdo dado em 
 - Docker/Docker-Compose
 
 ### [Rota do Swagger](http://localhost:5000/swagger/index.html)
+
+### License & Copyright
+Licensed under the [MIT License](LICENSE)
