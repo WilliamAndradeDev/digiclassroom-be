@@ -7,4 +7,4 @@ Projeto criado com o objetivo de facilitar o gerenciamento do conteúdo dado em 
 - Docker/Docker-Compose
 
 ### A rota do Swagger pode ser acessada em:
-- [Swagger]: http://localhost:5000/swagger/index.html
+- [Swagger]: (http://localhost:5000/swagger/index.html)
