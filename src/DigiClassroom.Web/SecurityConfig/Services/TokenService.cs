@@ -37,10 +37,12 @@ namespace DigiClassroom.Web.SecurityConfig.Services
             return _jwtSecurityTokenHandler.WriteToken(token);
         }
 
-        public string GetUserName(string token)
+        public string GetUserName(string tokenRaw)
         {
-            var jsonToken = _jwtSecurityTokenHandler.ReadJwtToken(token);
-            return jsonToken.Claims.First(claim => claim.Type == ClaimTypes.Name).Value;
+            string token = tokenRaw.Substring(7);
+            JwtSecurityToken jsonToken = _jwtSecurityTokenHandler.ReadJwtToken(token);
+            return jsonToken.Claims.First(claim => claim.Type == "unique_name").Value;
         }
+
     }
 }

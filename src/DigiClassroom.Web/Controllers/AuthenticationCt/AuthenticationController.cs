@@ -1,10 +1,9 @@
-using System.Threading.Tasks;
 using DigiClassroom.ApplicationCore.Services.AutheticationSv;
-using DigiClassroom.Infrastructure.Repositories.UserRp;
 using DigiClassroom.Web.Controllers.AuthenticationCt.Dtos;
 using DigiClassroom.Web.SecurityConfig.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace DigiClassroom.Web.Controllers.AuthenticationCt
 {
@@ -27,7 +26,7 @@ namespace DigiClassroom.Web.Controllers.AuthenticationCt
         public async Task<ActionResult<TokenDto>> AuthenticateUser(AutheticationForm form)
         {
             var user = await _authenticationService
-                                        .AuthenticateUser(form.Username,form.Password);
+                                        .AuthenticateUser(form.Username, form.Password);
             if (user == null)
                 return Unauthorized(new { message = "Usuário ou Senha inválidos. Tente novamente." });
 

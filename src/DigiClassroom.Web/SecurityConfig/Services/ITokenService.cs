@@ -5,6 +5,6 @@ namespace DigiClassroom.Web.SecurityConfig.Services
     public interface ITokenService
     {
         string GenerateToken(User user);
-        string GetUserName(string token);
+        string GetUserName(string tokenRaw);
     }
 }

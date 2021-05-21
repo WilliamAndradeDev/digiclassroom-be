@@ -5,6 +5,7 @@ Projeto criado com o objetivo de facilitar o gerenciamento do conteúdo dado em 
 - .NET 5(C#)
 - ASP .NET Core
 - Docker/Docker-Compose
+- PostgreSQL
 
 ### [Rota do Swagger](http://localhost:5000/swagger/index.html)
 

@@ -2,11 +2,10 @@
 using DigiClassroom.Web.Controllers.ClassroomCt.Dtos;
 using DigiClassroom.Web.ExceptionHdl.ErrorModels;
 using DigiClassroom.Web.ExceptionHdl.Extensions;
+using DigiClassroom.Web.SecurityConfig.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace DigiClassroom.Web.Controllers.ClassroomCt
@@ -17,10 +16,12 @@ namespace DigiClassroom.Web.Controllers.ClassroomCt
     {
 
         private IClassroomService _classroomService;
+        private ITokenService _tokenService;
 
-        public ClassroomController(IClassroomService classroomService)
+        public ClassroomController(IClassroomService classroomService, ITokenService tokenService)
         {
             _classroomService = classroomService;
+            _tokenService = tokenService;
         }
 
         [HttpGet("{id}")]
@@ -28,21 +29,21 @@ namespace DigiClassroom.Web.Controllers.ClassroomCt
         public async Task<ActionResult<ClassroomDetail>> FindClassroom(Guid id)
         {
             var result = await _classroomService.FindClassroom(id);
-            return new ClassroomDetail(result);
+            if (result != null)
+                return new ClassroomDetail(result);
+            else
+                return NotFound(new ErrorResponse("Não existe uma Turma com esse identificador.", 404));
         }
-
-        [HttpGet]
-        [Authorize(Roles = "teacher")]
-        public IEnumerable<ClassroomDetail> FindClassrooms()
-        => _classroomService.FindClassrooms().Select(c => new ClassroomDetail(c));
 
         [HttpPost]
         [Authorize(Roles = "teacher")]
-        public async Task<IActionResult> Save(ClassroomForm form)
+        public async Task<IActionResult> Save(ClassroomForm form,
+                                                [FromHeader(Name ="Authorization")] string tokenRaw)
         {
             if (ModelState.IsValid)
             {
-                var result = await _classroomService.Save(form.ToClassroom());
+                var result = await _classroomService.Save(form.ToClassroom(),
+                                                            _tokenService.GetUserName(tokenRaw));
                 return CreatedAtAction("FindClassroom", new { Id = result.Id }, new ClassroomDetail(result));
             }
             return BadRequest(new ErrorResponse(ModelState.GetErrorsEnumerated()));

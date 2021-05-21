@@ -1,9 +1,9 @@
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 using DigiClassroom.Infrastructure.DBConfig;
 using DigiClassroom.Infrastructure.Models;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace DigiClassroom.Infrastructure.Repositories.UserRp
 {
@@ -19,16 +19,19 @@ namespace DigiClassroom.Infrastructure.Repositories.UserRp
 
         public async Task<User> FindUserById(Guid id)
         => await _digiClassroomContext.Users
-                            .Where(u=>u.Id.Equals(id))
+                            .Where(u => u.Id.Equals(id))
                                     .FirstOrDefaultAsync();
 
-        public async Task<User> FindUserByUserNameAsync(string name)
-        => await _digiClassroomContext.Users.Where(u=>u.Username.Equals(name)).FirstOrDefaultAsync();
-
-        public async Task<User> FindUserByUsernameAndPasswordAsync(string username, string password)
+        public async Task<User> FindUserByUsernameAsync(string username)
         => await _digiClassroomContext.Users
-                           .Where(u => u.Username.Equals(username) &&
-                                       u.Password.Equals(password)).FirstOrDefaultAsync();
+                                .Where(u => u.Username.Equals(username))
+                                                            .FirstOrDefaultAsync();
+
+        public async Task<User> FindUserWithClassroomsByUsernameAsync(string username)
+        => await _digiClassroomContext.Users
+                                .Where(u => u.Username.Equals(username))
+                                            .Include(u => u.Classrooms)
+                                                            .FirstOrDefaultAsync();
 
         public async Task<User> Save(User user)
         {

@@ -24,10 +24,11 @@ namespace DigiClassroom.ApplicationCore.Services.UserSv
             return await _userRepository.Save(user);
         }
 
-        public async Task<User> FindUser(Guid id)
-        {
-            return await _userRepository.FindUserById(id);
-        }
+        public async Task<User> FindUserByUsernameAsync(string username)
+        => await _userRepository.FindUserByUsernameAsync(username);
+
+        public async Task<User> FindUserWithClassroomsByUsernameAsync(string username)
+        => await _userRepository.FindUserWithClassroomsByUsernameAsync(username);
 
     }
 }
